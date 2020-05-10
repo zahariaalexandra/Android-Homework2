@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".FirstActivity">
 
-
+    <fragment
+        android:name="com.example.android_homework2.RecycleViewFragment"
+        android:id="@+id/recycleViewFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
