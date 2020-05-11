@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ public class RecycleViewFragment extends Fragment {
 
     private EditText txtFirstName;
     private EditText txtLastName;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
 
   /*  public interface ToolbarListener {
         public void onButtonClick(String firstName, String lastName);
@@ -42,10 +46,15 @@ public class RecycleViewFragment extends Fragment {
         //final View view = inflater.inflate(R.layout.fragment_recycle_view, container, false);
         View view = inflater.inflate(R.layout.fragment_recycle_view, container, false);
 
-        txtFirstName = (EditText) view.findViewById(R.id.txtFirstName);
-        txtLastName = (EditText) view.findViewById(R.id.txtLastName);
+        txtFirstName = view.findViewById(R.id.txtFirstName);
+        txtLastName = view.findViewById(R.id.txtLastName);
+        recyclerView = view.findViewById(R.id.recyclerView);
         //final Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
         Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new UserAdapter();
+        recyclerView.setAdapter(adapter);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

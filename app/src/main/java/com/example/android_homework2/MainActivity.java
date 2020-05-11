@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class FirstActivity extends AppCompatActivity{//FragmentActivity implements RecycleViewFragment.ToolbarListener {
+public class MainActivity extends AppCompatActivity{//FragmentActivity implements RecycleViewFragment.ToolbarListener {
 
     /*EditText txtFirstName;
     EditText txtLastName;*/
