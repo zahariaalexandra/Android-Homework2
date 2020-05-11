@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +27,7 @@ public class RecycleViewFragment extends Fragment {
     private EditText txtLastName;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private ArrayList<User> users;
+    //private ArrayList<User> users;
 
   /*  public interface ToolbarListener {
         public void onButtonClick(String firstName, String lastName);
@@ -54,13 +56,14 @@ public class RecycleViewFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         //final Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
         Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
+        AppDatabase appDatabase = Room.databaseBuilder(getContext(), AppDatabase.class, "database").build();
 
-        users = new ArrayList<>();
+        /*users = new ArrayList<>();
 
         for (int index = 0; index < 10; index++) {
             User user = new User("Ale", "Zaharia");
             users.add(user);
-        }
+        }*/
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UserAdapter(users);
