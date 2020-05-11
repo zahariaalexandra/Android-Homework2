@@ -25,7 +25,7 @@ public class RecycleViewFragment extends Fragment {
     private EditText txtLastName;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private ArrayList<String> users;
+    private ArrayList<User> users;
 
   /*  public interface ToolbarListener {
         public void onButtonClick(String firstName, String lastName);
@@ -58,7 +58,8 @@ public class RecycleViewFragment extends Fragment {
         users = new ArrayList<>();
 
         for (int index = 0; index < 10; index++) {
-            users.add("Alexandra #" + index);
+            User user = new User("Ale", "Zaharia");
+            users.add(user);
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
