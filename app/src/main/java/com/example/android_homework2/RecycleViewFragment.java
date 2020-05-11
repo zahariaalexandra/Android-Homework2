@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecycleViewFragment extends Fragment {
 
@@ -27,7 +29,8 @@ public class RecycleViewFragment extends Fragment {
     private EditText txtLastName;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    //private ArrayList<User> users;
+    private List<User> users;
+    AppDatabase appDatabase;
 
   /*  public interface ToolbarListener {
         public void onButtonClick(String firstName, String lastName);
@@ -55,8 +58,11 @@ public class RecycleViewFragment extends Fragment {
         txtLastName = view.findViewById(R.id.txtLastName);
         recyclerView = view.findViewById(R.id.recyclerView);
         //final Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
-        Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
-        AppDatabase appDatabase = Room.databaseBuilder(getContext(), AppDatabase.class, "database").build();
+        Button btnAdd = view.findViewById(R.id.btnAdd);
+        Button btnDelete = view.findViewById(R.id.btnDelete);
+        appDatabase = Room.databaseBuilder(getContext(), AppDatabase.class, "database")
+                .allowMainThreadQueries()
+                .build();
 
         /*users = new ArrayList<>();
 
@@ -64,7 +70,7 @@ public class RecycleViewFragment extends Fragment {
             User user = new User("Ale", "Zaharia");
             users.add(user);
         }*/
-
+        users = appDatabase.userDao().getAllUsers();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UserAdapter(users);
         recyclerView.setAdapter(adapter);
@@ -73,6 +79,19 @@ public class RecycleViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addData();
+                /*User user = new User(txtFirstName.getText().toString(), txtLastName.getText().toString());
+                appDatabase.userDao().insertAll(user);
+                users = appDatabase.userDao().getAllUsers();
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                adapter = new UserAdapter(users);
+                recyclerView.setAdapter(adapter);*/
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeData();
             }
         });
 
@@ -81,8 +100,47 @@ public class RecycleViewFragment extends Fragment {
 
     private void addData()
     {
-        Toast toast = Toast.makeText(getContext(), txtFirstName.getText().toString(), Toast.LENGTH_SHORT);
-        toast.show();
+        /*Toast toast = Toast.makeText(getContext(), txtFirstName.getText().toString(), Toast.LENGTH_SHORT);
+        toast.show();*/
         //activityCallback.onButtonClick(txtFirstName.getText().toString(), txtLastName.getText().toString());
+
+        if(txtLastName.getText().toString().equals("") || txtFirstName.getText().toString().equals("")) {
+            Toast toast = Toast.makeText(getContext(), getString(R.string.input_error), Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else {
+            User user = new User(txtFirstName.getText().toString(), txtLastName.getText().toString());
+            appDatabase.userDao().insertAll(user);
+            users = appDatabase.userDao().getAllUsers();
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            adapter = new UserAdapter(users);
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
+    private void removeData()
+    {
+        if(txtLastName.getText().toString().equals("") || txtFirstName.getText().toString().equals("")) {
+            Toast toast = Toast.makeText(getContext(), getString(R.string.input_error), Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else {
+            //User user = new User(txtFirstName.getText().toString(), txtLastName.getText().toString());
+            int deleted = appDatabase.userDao().deleteUser(txtFirstName.getText().toString(), txtLastName.getText().toString());
+
+            if(deleted != 0) {
+                Toast toast = Toast.makeText(getContext(), deleted + " " + getString(R.string.delete_complete), Toast.LENGTH_LONG);
+                toast.show();
+                users = appDatabase.userDao().getAllUsers();
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                adapter = new UserAdapter(users);
+                recyclerView.setAdapter(adapter);
+            }
+            else {
+                Toast toast = Toast.makeText(getContext(), getString(R.string.delete_incomplete), Toast.LENGTH_LONG);
+                toast.show();
+            }
+
+       }
     }
 }
