@@ -112,6 +112,8 @@ public class RecycleViewFragment extends Fragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 adapter = new UserAdapter(users);
                 recyclerView.setAdapter(adapter);
+                txtFirstName.setText("");
+                txtLastName.setText("");
             }
             else {
                 Toast toast = Toast.makeText(getContext(), getString(R.string.delete_incomplete), Toast.LENGTH_LONG);
