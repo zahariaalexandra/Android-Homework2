@@ -9,7 +9,6 @@
     <string name="input_error">Please insert the full name</string>
     <string name="delete_complete"> user(s) deleted</string>
     <string name="delete_incomplete">Users not found</string>
-    <string name="json_url">https://jsonplaceholder.typicode.com/users</string>
     <string name="fetch_complete">Data fetched</string>
     <string name="fetch_incomplete">Data could not be fetched</string>
 </resources>
