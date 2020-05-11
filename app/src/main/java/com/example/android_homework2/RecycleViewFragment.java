@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class RecycleViewFragment extends Fragment {
 
    /* private static final String TAG = "CreateUser";
@@ -23,6 +25,7 @@ public class RecycleViewFragment extends Fragment {
     private EditText txtLastName;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    private ArrayList<String> users;
 
   /*  public interface ToolbarListener {
         public void onButtonClick(String firstName, String lastName);
@@ -52,8 +55,14 @@ public class RecycleViewFragment extends Fragment {
         //final Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
         Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
 
+        users = new ArrayList<>();
+
+        for (int index = 0; index < 10; index++) {
+            users.add("Alexandra #" + index);
+        }
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new UserAdapter();
+        adapter = new UserAdapter(users);
         recyclerView.setAdapter(adapter);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
