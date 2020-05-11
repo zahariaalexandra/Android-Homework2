@@ -8,12 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    List<User> users;
+    private List<User> users;
 
     public UserAdapter(List<User> users) {
         this.users = users;
@@ -37,12 +36,13 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return users.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView firstName;
-        public TextView lastName;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView firstName;
+        TextView lastName;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
+
             firstName = itemView.findViewById(R.id.firstName);
             lastName = itemView.findViewById(R.id.lastName);
         }
