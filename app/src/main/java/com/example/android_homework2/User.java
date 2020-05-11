@@ -19,6 +19,11 @@ public class User {
         this.lastName = lastName;
     }
 
+    public User() {
+        firstName = "";
+        lastName = "";
+    }
+
     public int getId() {
         return id;
     }

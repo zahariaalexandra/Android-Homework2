@@ -18,4 +18,7 @@ public interface UserDataAccessObject {
 
     @Query("DELETE FROM user WHERE first_name = :firstName AND last_name = :lastName")
     int deleteUser(String firstName, String lastName);
+
+    @Insert
+    void insertUser(User user);
 }
