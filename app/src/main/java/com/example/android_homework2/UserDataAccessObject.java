@@ -17,4 +17,7 @@ public interface UserDataAccessObject {
 
     @Insert
     void insertUser(User user);
+
+    @Query("DELETE FROM user")
+    int deleteAllUsers();
 }

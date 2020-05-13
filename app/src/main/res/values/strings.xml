@@ -11,4 +11,7 @@
     <string name="delete_incomplete">Users not found</string>
     <string name="fetch_complete">Data fetched</string>
     <string name="fetch_incomplete">Data could not be fetched</string>
+    <string name="clear_all">Clear</string>
+    <string name="clear_incomplete">No data to clear</string>
+    <string name="clear_complete">user(s) deleted</string>
 </resources>

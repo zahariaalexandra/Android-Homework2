@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -41,6 +42,7 @@ public class RecycleViewFragment extends Fragment {
         txtLastName = view.findViewById(R.id.txtLastName);
         recyclerView = view.findViewById(R.id.recyclerView);
 
+        Button btnClearAll = view.findViewById(R.id.btnClearAll);
         Button btnAdd = view.findViewById(R.id.btnAdd);
         Button btnDelete = view.findViewById(R.id.btnDelete);
         Button btnSync = view.findViewById(R.id.btnSync);
@@ -53,6 +55,13 @@ public class RecycleViewFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UserAdapter(users);
         recyclerView.setAdapter(adapter);
+
+        btnClearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAllData();
+            }
+        });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,12 +87,28 @@ public class RecycleViewFragment extends Fragment {
         return view;
     }
 
+    private void clearAllData()
+    {
+        if(users.isEmpty()) {
+            Toast toast = Toast.makeText(getContext(), getString(R.string.clear_incomplete), Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            int deleted = appDatabase.userDao().deleteAllUsers();
+            users = appDatabase.userDao().getAllUsers();
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            adapter = new UserAdapter(users);
+            recyclerView.setAdapter(adapter);
+
+            Toast toast = Toast.makeText(getContext(), deleted + " " + getString(R.string.clear_complete), Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
     private void addData() {
         if(txtLastName.getText().toString().equals("") || txtFirstName.getText().toString().equals("")) {
             Toast toast = Toast.makeText(getContext(), getString(R.string.input_error), Toast.LENGTH_LONG);
             toast.show();
-        }
-        else {
+        } else {
             User user = new User(txtFirstName.getText().toString(), txtLastName.getText().toString());
 
             appDatabase.userDao().insertUser(user);
@@ -100,8 +125,7 @@ public class RecycleViewFragment extends Fragment {
         if(txtLastName.getText().toString().equals("") || txtFirstName.getText().toString().equals("")) {
             Toast toast = Toast.makeText(getContext(), getString(R.string.input_error), Toast.LENGTH_LONG);
             toast.show();
-        }
-        else {
+        } else {
             int deleted = appDatabase.userDao().deleteUser(txtFirstName.getText().toString(), txtLastName.getText().toString());
 
             if(deleted != 0) {
@@ -114,8 +138,7 @@ public class RecycleViewFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
                 txtFirstName.setText("");
                 txtLastName.setText("");
-            }
-            else {
+            } else {
                 Toast toast = Toast.makeText(getContext(), getString(R.string.delete_incomplete), Toast.LENGTH_LONG);
                 toast.show();
             }
