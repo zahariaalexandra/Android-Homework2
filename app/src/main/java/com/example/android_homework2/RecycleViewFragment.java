@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.style.AlignmentSpan;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -189,7 +188,6 @@ public class RecycleViewFragment extends Fragment {
                 JSONObject innerObject = array.getJSONObject(index);
                 String firstName = innerObject.getString("firstname");
                 String lastName = innerObject.getString("lastname");
-                User user = new User(firstName, lastName);
 
                 task = new SaveDataAsync().execute(firstName, lastName);
             }

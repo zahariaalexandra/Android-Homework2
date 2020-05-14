@@ -7,15 +7,10 @@ import java.util.List;
 
 public class DeleteDataAsync extends AsyncTask<List<User>, Void, Pair<Integer, List<User>>> {
 
-    private int rowsDeleted;
-
-    public int getRowsDeleted() {
-        return rowsDeleted;
-    }
-
     @Override
     protected Pair<Integer, List<User>> doInBackground(List<User>... params) {
         List<User> users;
+        int rowsDeleted;
 
         if(params[0].size() == 1)
             rowsDeleted = ApplicationController.getInstance().getDatabaseInstance().userDao().deleteUser(params[0].get(0).getFirstName(), params[0].get(0).getLastName());
